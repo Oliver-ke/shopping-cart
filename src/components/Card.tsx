@@ -1,6 +1,7 @@
 import { JSX } from 'solid-js';
 import { formatCurrency } from '../utils/money';
 import { Item } from '../typeDefs/Items';
+import { useCartStore } from '../context/CartContext';
 
 interface ICard {
     item: Item
@@ -8,6 +9,18 @@ interface ICard {
 }
 
 export default function Card({item, style}:ICard): JSX.Element{
+    const store = useCartStore()
+
+    function addItem(){
+        const alreadyExist = store?.items.find((p) => p.id === item.id)
+
+        if(alreadyExist){
+            store?.setItems((p) => p.id === item.id, 'quantity',( cty) => cty ? cty + 1: 1)
+            return
+        }
+        
+        store?.setItems([...store.items, item])
+    }
    
     return(
     <div class={`bg-white rounded-sm shadow-ms w-80 ${style}`}>
@@ -17,7 +30,7 @@ export default function Card({item, style}:ICard): JSX.Element{
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat quas ab laborum quia nisi temporibus.</p>
         <div class="grid gap-2 grid-cols-2 grid-rows-2 mt-2">
              <h2 class="text-slate-700 dark:text-slate-500">{formatCurrency({amount:item?.price})}</h2>
-           <div class='text-primary cursor-pointer' onClick={() => {}}>
+           <div class='text-primary cursor-pointer' onClick={() => addItem()}>
             Add to Cart
             </div> 
         </div>
