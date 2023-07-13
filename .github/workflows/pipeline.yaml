@@ -36,9 +36,12 @@ jobs:
       - name: Install deps
         run: npm install
       - name: Build project
-        run: ./deployment/build.sh
+        run: |
+          chmod +x ./deployment/build.sh
+          chmod +x ./deployment/deploy.sh
+          ./deployment/build.sh
         env:
-          APP_BACKEND_API: 'https://cart-api/v1.com'
+          APP_BACKEND_API: "https://cart-api/v1.com"
       - name: Move deploy script to dist/ directory
         run: mv -r deployment dist/
       - name: Share artifact with jobs
