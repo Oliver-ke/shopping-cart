@@ -43,7 +43,7 @@ jobs:
         env:
           APP_BACKEND_API: "https://cart-api/v1.com"
       - name: Move deploy script to dist/ directory
-        run: mv -r deployment dist/
+        run: mv deployment dist/
       - name: Share artifact with jobs
         uses: actions/upload-artifact@v1
         with:
