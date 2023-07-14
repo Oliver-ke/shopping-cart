@@ -38,7 +38,6 @@ jobs:
       - name: Build project
         run: |
           chmod +x ./deployment/build.sh
-          chmod +x ./deployment/deploy.sh
           ./deployment/build.sh
         env:
           APP_BACKEND_API: "https://cart-api/v1.com"
@@ -64,11 +63,10 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
-      - name: deploy application
-        working-directory: build-artifact
-        run: ./deployment/build.sh
-      - name: invalidate s3
-        run: ./deployment/build.sh
+      - name: push to s3, invalidate cache
+        run: |
+          chmod +x ./deployment/deploy.sh
+          ./deployment/build.sh
         env:
           S3_BUCKET: ${{ secrets.S3_BUCKET }}
           DISTRIBUTION_ID: ${{ secrets.DISTRIBUTION_ID }}
