@@ -65,9 +65,9 @@ jobs:
           aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
       - name: push to s3, invalidate cache
         run: |
-          ls -l
-          chmod +x ./deployment/deploy.sh
-          ./deployment/deploy.sh
+          ls -l 
+          chmod +x ./build-artifact/deployment/deploy.sh
+          ./build-artifact/deployment/deploy.sh
         env:
           S3_BUCKET: ${{ secrets.S3_BUCKET }}
           DISTRIBUTION_ID: ${{ secrets.DISTRIBUTION_ID }}
