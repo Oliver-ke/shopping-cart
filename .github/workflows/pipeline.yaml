@@ -65,7 +65,7 @@ jobs:
           aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
       - name: push to s3, invalidate cache
         run: |
-          ls && cd dist
+          ls -l
           chmod +x ./deployment/deploy.sh
           ./deployment/deploy.sh
         env:
